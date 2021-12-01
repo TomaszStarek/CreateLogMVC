@@ -1,0 +1,116 @@
+﻿@model MVCtry2.Models.FormModel
+
+@{
+    //  ViewData["Title"] = "Home Page";
+}
+
+
+<br>
+</br>
+@{
+    string msg3 = null;
+    if (TempData.Peek("FileReturned") != null)
+        msg3 = TempData.Peek("FileReturned").ToString();
+}
+
+@if (msg3 != null)
+{
+    if (!msg3.Contains("Error"))
+    {
+        if (Model != null)
+        {
+            <div style="background-color:lightblue;">
+                <h4>   <span>Utworzono plik: @msg3</span></h4>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div style="background-color:crimson;">
+            <h4>  <span>Nie znaleziono pliku, spróbuj jeszcze raz!</span> </h4>
+        </div>
+    }
+
+}
+<div style="background-color: lightblue;">
+    @if (Model != null)
+    {
+
+        <h4>@Html.ActionLink("Kliknij aby pobrać VERTICAL: " + @msg3, "DownloadFile2", new { fileName ="V" + Model.Name })</h4>
+        <h4>@Html.ActionLink("Kliknij aby pobrać HORIZONTAL: " + @msg3, "DownloadFile2", new { fileName ="H" + Model.Name })</h4>
+
+    }
+</div>
+
+<div>
+    <h4>Załaduj nagłówek</h4>
+    <form asp-controller="Home" asp-action="HeaderFile"
+          enctype="multipart/form-data" method="post">
+        <input type="file" accept=".txt, .tst" name="headerFile.File" value="" id="" />
+        <button type="submit">Submit</button>
+
+        @{
+            string msg = null;
+            if (TempData.Peek("header") != null)
+                msg = TempData.Peek("header").ToString();
+        }@msg
+
+
+        @if (msg != null)
+        {
+            <div style="background-color:hotpink;">
+                <span>Załadowano plik: @msg</span>
+            </div>
+        }
+
+    </form>
+</div>
+
+
+
+<div></div>
+<br>
+<br />
+<div>
+    <h4>Załaduj dane</h4>
+    <form asp-controller="Home" asp-action="DataFile"
+          enctype="multipart/form-data" method="post">
+        <input type="file" accept=".txt, .dat" name="DataFile.File" value="" />
+        <button type="submit">Submit</button>
+
+        @{
+            string msg2 = null;
+            if (TempData.Peek("data") != null)
+                msg2 = TempData.Peek("data").ToString();
+        }@msg2
+
+        @if (@msg2 != null)
+        {
+            <div style="background-color:hotpink;">
+                <span>Załadowano plik: @msg2</span>
+            </div>
+        }
+
+    </form>
+</div>
+
+<br>
+<br />
+
+<div>
+    <h4> Wprowadź poszukiwany numer seryjny</h4>
+    <small><h8> (możesz dodać dowolną liczbę numerów oddzielonych przecinkiem: numer,numer2...)</h8></small>
+    <form asp-controller="Home" asp-action="SearchSerialFromDataList"
+          enctype="multipart/form-data" method="post">
+        <input type="text" name="SomeForm.StringToFind" value="" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
+<div></div>
+<br>
+<br />
+
+
